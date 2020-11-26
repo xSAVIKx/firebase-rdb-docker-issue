@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Demonstrates the use of a Firebase RDB with a Dockerized emulator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase RDB with Dockerized emulator</title>
+</head>
+<body>
+
+<button id="write">Write to RDB</button>
+
+<div id="entries"></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "someKey",
+        authDomain: "ws://localhost:54897",
+        databaseURL: "ws://localhost:54897?ns=fake-server",
+        projectId: "some-project",
+        storageBucket: "some-bucket.appspot.com",
+        messagingSenderId: "37440885154"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    db.useEmulator("localhost", 54897);
+
+    const ref = db.ref().child('entries');
+    let i = 1;
+    document.getElementById("write").onclick = () => {
+        const newEntry = ref.push().key;
+        const newIndex = i++;
+        console.debug(`Adding a new entry with index '${newIndex}'.`);
+        const updates = {
+            [`entries/${newEntry}`]: newIndex
+        }
+        ref.update(updates);
+    };
+    const entries = document.getElementById("entries");
+    ref.on('value', snapshot => {
+        const newEntry = document.createElement("p");
+        const fbEntries = snapshot.val().entries;
+        console.debug(`Entries now.`, fbEntries);
+        newEntry.innerText = `Entries now: ${JSON.stringify(fbEntries)}`;
+        entries.appendChild(newEntry);
+    });
+</script>
+</body>
+</html>
