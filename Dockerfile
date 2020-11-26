@@ -10,4 +10,4 @@ RUN apk add openjdk11-jre && \
 
 COPY ./firebase-docker.json /firebase.json
 
-ENTRYPOINT [ "firebase", "emulators:start" ]
+ENTRYPOINT [ "firebase", "emulators:start", "--debug" ]
