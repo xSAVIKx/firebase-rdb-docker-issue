@@ -2,6 +2,9 @@
   "name": "firebase-docker-example",
   "version": "0.0.1",
   "license": "MIT",
+  "scripts": {
+    "start": "npx firebase emulators:start"
+  },
   "devDependencies": {
     "firebase-tools": "^8.16.2"
   }
