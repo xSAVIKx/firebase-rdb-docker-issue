@@ -43,7 +43,10 @@
     const entries = document.getElementById("entries");
     ref.on('value', snapshot => {
         const newEntry = document.createElement("p");
-        const fbEntries = snapshot.val().entries;
+        const fbEntries = snapshot?.val()?.entries;
+        if (!fbEntries) {
+            console.debug("No entries available.");
+        }
         console.debug(`Entries now.`, fbEntries);
         newEntry.innerText = `Entries now: ${JSON.stringify(fbEntries)}`;
         entries.appendChild(newEntry);
