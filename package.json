@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npx firebase emulators:start"
+    "start": "npx firebase emulators:start",
+    "serve": "npx serve --single --listen 8080"
   },
   "devDependencies": {
-    "firebase-tools": "^8.16.2"
+    "firebase-tools": "^8.16.2",
+    "serve": "^11.3.2"
   }
 }
